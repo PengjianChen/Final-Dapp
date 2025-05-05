@@ -42,7 +42,7 @@ export default function LoanPage() {
   const toDate = (ts: number) => ts === 0 ? '—' : new Date(ts * 1000).toLocaleDateString()
 
   const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window !== 'undefined' && window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       await provider.send('eth_requestAccounts', [])
       const signer = provider.getSigner()
@@ -134,7 +134,8 @@ export default function LoanPage() {
     <div className="flex h-screen bg-[#f5f6fa]">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        <Topbar />
+        {/* ✅ 修复点：添加 title 属性 */}
+        <Topbar title="Loan Page" />
         <div className="p-6 space-y-6 overflow-auto">
           <h2 className="text-2xl font-bold text-gray-800">📄 My Loans</h2>
 
@@ -206,6 +207,3 @@ export default function LoanPage() {
     </div>
   )
 }
-
-
-
