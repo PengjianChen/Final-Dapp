@@ -24,7 +24,7 @@ export default function AdminPage() {
       const pool = await getPoolBalance()
       setPoolBalance(pool)
     } catch (err) {
-      console.error('获取资金池失败:', err)
+      console.error('Failed to get pool balance:', err)
       setPoolBalance('0.0000')
     }
   }, [getPoolBalance])
@@ -34,7 +34,7 @@ export default function AdminPage() {
       await connectWallet()
       await updatePoolBalance()
     } catch (err) {
-      console.error('加载失败:', err)
+      console.error('Failed to load wallet or balance:', err)
     }
   }, [connectWallet, updatePoolBalance])
 
@@ -43,26 +43,26 @@ export default function AdminPage() {
   }, [loadParams])
 
   const handleDeposit = async () => {
-    if (!depositAmount) return alert('请输入注资金额')
+    if (!depositAmount) return alert('Please enter a deposit amount.')
     try {
       await fundPool(depositAmount)
-      alert('注资成功')
+      alert('✅ Deposit successful')
       await updatePoolBalance()
     } catch (err) {
-      console.error('注资失败:', err)
-      alert('注资失败，请检查权限和网络')
+      console.error('Deposit failed:', err)
+      alert('❌ Deposit failed. Check wallet permissions or network.')
     }
   }
 
   const handleWithdraw = async () => {
-    if (!withdrawAmount) return alert('请输入提取金额')
+    if (!withdrawAmount) return alert('Please enter a withdrawal amount.')
     try {
       await withdrawPool(withdrawAmount)
-      alert('提取成功')
+      alert('✅ Withdrawal successful')
       await updatePoolBalance()
     } catch (err) {
-      console.error('提取失败:', err)
-      alert('提取失败，请检查权限和网络')
+      console.error('Withdrawal failed:', err)
+      alert('❌ Withdrawal failed. Check wallet permissions or network.')
     }
   }
 
@@ -72,48 +72,48 @@ export default function AdminPage() {
       <div className="flex-1 flex flex-col">
         <Topbar title="Admin" />
         <section className="pl-8 pr-6 pt-6 pb-10 space-y-6 bg-gray-100 min-h-screen">
-          <h2 className="text-3xl font-bold text-gray-700">管理员控制台</h2>
+          <h2 className="text-3xl font-bold text-gray-700">Admin Console</h2>
 
           <div className="bg-white shadow-md rounded-xl p-6">
-            <h3 className="text-xl font-semibold mb-4">资金池余额</h3>
+            <h3 className="text-xl font-semibold mb-4">Pool Balance</h3>
             <p className="text-gray-800 mb-4 text-lg">
-              当前资金池: <span className="font-bold">{poolBalance || '0.0000'} ETH</span>
+              Current Pool: <span className="font-bold">{poolBalance || '0.0000'} ETH</span>
             </p>
 
             <div className="grid grid-cols-2 gap-6">
-              {/* 注资 */}
+              {/* Deposit */}
               <div>
-                <label className="block mb-2 text-sm text-gray-600">注资金额（ETH）</label>
+                <label className="block mb-2 text-sm text-gray-600">Deposit Amount (ETH)</label>
                 <input
                   type="text"
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(e.target.value)}
-                  placeholder="例如 0.01"
+                  placeholder="e.g. 0.01"
                   className="w-full px-4 py-2 border rounded text-sm"
                 />
                 <button
                   onClick={handleDeposit}
                   className="mt-3 w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
                 >
-                  注资
+                  Deposit
                 </button>
               </div>
 
-              {/* 提取 */}
+              {/* Withdraw */}
               <div>
-                <label className="block mb-2 text-sm text-gray-600">提取金额（ETH）</label>
+                <label className="block mb-2 text-sm text-gray-600">Withdraw Amount (ETH)</label>
                 <input
                   type="text"
                   value={withdrawAmount}
                   onChange={(e) => setWithdrawAmount(e.target.value)}
-                  placeholder="例如 0.005"
+                  placeholder="e.g. 0.005"
                   className="w-full px-4 py-2 border rounded text-sm"
                 />
                 <button
                   onClick={handleWithdraw}
                   className="mt-3 w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
                 >
-                  提取
+                  Withdraw
                 </button>
               </div>
             </div>
