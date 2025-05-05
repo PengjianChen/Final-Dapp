@@ -23,7 +23,7 @@ export default function DashboardPage() {
   const [outstandingDebt, setOutstandingDebt] = useState("0");
   const [borrowLimit, setBorrowLimit] = useState("0");
   const getBorrowLimit = async (address: string) => {
-  return 0; // 或者一个模拟值
+  return 0;
 };
 
   useEffect(() => {
