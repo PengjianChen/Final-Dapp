@@ -14,17 +14,12 @@ export default function DashboardPage() {
     getAmountOwed,
     getDepositBalance,
     getOutstandingDebt,
-    getBorrowLimit,
   } = useLending();
 
   const [loanCount, setLoanCount] = useState(0);
   const [outstanding, setOutstanding] = useState("0");
   const [depositBalance, setDepositBalance] = useState("0");
   const [outstandingDebt, setOutstandingDebt] = useState("0");
-  const [borrowLimit, setBorrowLimit] = useState("0");
-  const getBorrowLimit = async (address: string) => {
-  return 0;
-};
 
   useEffect(() => {
     const loadData = async () => {
@@ -44,16 +39,12 @@ export default function DashboardPage() {
 
       const debt = await getOutstandingDebt(address);
       setOutstandingDebt(debt);
-
-      const limit = await getBorrowLimit(address);
-      setBorrowLimit(limit);
     };
 
     loadData();
   }, [
     address,
     getAmountOwed,
-    //getBorrowLimit,
     getDepositBalance,
     getOutstandingDebt,
     getUserLoanCount,
@@ -72,7 +63,6 @@ export default function DashboardPage() {
             <p>📂 Number of loan records: {loanCount}</p>
             <p>📌 Amount owed on the latest loan: {outstanding} ETH</p>
             <p>💰 Current deposit balance: {depositBalance} ETH</p>
-
           </div>
 
           <div className="flex gap-4 mt-6">
