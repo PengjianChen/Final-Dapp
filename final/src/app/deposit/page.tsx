@@ -1,12 +1,17 @@
 'use client'
 
-
 import { useCallback, useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { getContract } from '../../hooks/contract'
 import Sidebar from '../../app/components/layout/Sidebar'
 import Topbar from '../../app/components/layout/Topbar'
 import { useRouter } from 'next/navigation'
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 type DepositType = 'FixedTerm' | 'FlexibleTerm'
 
@@ -28,7 +33,7 @@ export default function DepositPage() {
   const [currentMonth, setCurrentMonth] = useState<number | null>(null)
 
   const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window !== 'undefined' && window.ethereum) {
       const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
       await window.ethereum.request({ method: 'eth_requestAccounts' })
       const userSigner = web3Provider.getSigner()
