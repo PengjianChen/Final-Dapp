@@ -74,12 +74,17 @@ export function useLending() {
     const id = await contract.userLoans(user, index);
     return Number(id);
   };
-  
 
   const getOutstandingDebt = async (user: string): Promise<string> => {
     const contract = getContract();
     const debt = await contract.userOutstanding(user);
     return ethers.utils.formatEther(debt);
+  };
+
+  const getBorrowLimit = async (user: string): Promise<string> => {
+    const contract = getContract();
+    const limit = await contract.getBorrowLimit(user);
+    return ethers.utils.formatEther(limit);
   };
 
   // --- Admin & Pool info ---
@@ -143,6 +148,7 @@ export function useLending() {
     const balance = await contract.poolBalance(); // or getTotalDeposits() if available
     return ethers.utils.formatEther(balance);
   };
+
   return {
     borrow,
     repay,
@@ -151,6 +157,7 @@ export function useLending() {
     getUserLoanCount,
     getUserLoanId,
     getOutstandingDebt,
+    getBorrowLimit, 
     fundPool,
     withdrawPool,
     getPoolBalance,
