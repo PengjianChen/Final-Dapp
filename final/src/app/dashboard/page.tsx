@@ -14,7 +14,7 @@ export default function DashboardPage() {
     getAmountOwed,
     getDepositBalance,
     getOutstandingDebt,
-    //getBorrowLimit,
+    getBorrowLimit,
   } = useLending();
 
   const [loanCount, setLoanCount] = useState(0);
